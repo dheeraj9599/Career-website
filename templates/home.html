@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  {% include 'bootstrap.html' %}
+  <meta charset = "utf-8" />
+        <title>
+            Dk Careers
+        </title>
+          
+        <!-- add icon link -->
+        <link rel = "icon" href = 
+"https://cdn-icons-png.flaticon.com/512/1754/1754397.png" 
+        type = "image/x-icon">
+</head>
+<body style="background-image:url('https://static.vecteezy.com/system/resources/previews/002/058/253/non_2x/abstract-polygonal-white-background-free-vector.jpg'); background-size: contain;  ">
+  <div class="container">
+  <h1 class="text-center mb-3 mt-3"> Welcome To Dk Careers website</h1>
+  <div class="text-center ">
+    <img class = "shadow-lg p-3 rounded" style="background-size: cover;" src="https://www.ringcentral.com/us/en/blog/wp-content/uploads/2020/07/Blog_How_to_Build_a_Great_Workplace_Experience_Social_Card_01-1.gif" width="100%">
+  </div>
+  <h2 class="text-center mb-3 mt-5"> About Dk</h2>
+  <p class="bold">
+Our company can range from small-scale operations to large multinational corporations. Examples of Our company include tech giants like Apple and Microsoft, fashion brands like Nike and Gucci, and consumer goods company like Procter & Gamble and Coca-Cola.
+
+In Our company, the focus is on designing and creating products that meet the needs and desires of their target market. These products may be physical goods, such as clothing or electronics, or digital products, such as software or apps.
+
+Our company often invest heavily in research and development to create innovative products and stay ahead of the competition. They may also focus on marketing and advertising to build brand awareness and drive sales.
+
+Overall, Our company are focused on creating, manufacturing, and selling physical or digital products that provide value to their customers.
+  </p>
+    <h2 class = "text-center">Open Positions</h2>
+  <h4>
+    <p>
+      {% for job in jobs %}
+         {% include 'job.html' %}
+    </br>
+      {% endfor %}
+    </p>
+  </h4>
+</div>
+<div class="text-center text-lg-start mt-4 pt-2">
+    <a href="/logout" class="link-primary">Log out</a>
+</div>
+</body>
+</html>
