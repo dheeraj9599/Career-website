@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, jsonify, redirect, session, flash
-from flask_sqlalchemy import SQLAlchemy
+# from flask_sqlalchemy import SQLAlchemy
 from db import load_users, check_valid_user, register_new_user, Load_Jobs_From_DB, add_job_to_DB, get_job
 import os
 
