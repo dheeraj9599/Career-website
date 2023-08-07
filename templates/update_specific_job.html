@@ -1,0 +1,112 @@
+{% include './bootstrap.html' %}
+<form class="vh-100" style="background-color: #2779e2;" method="post" action="/{{job[0]['id']}}/submit_updated_job">
+    <div class="container h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-xl-9">
+  
+          <h2 class="text-white mb-2">Update the Details of this Job</h2>
+  
+          <div class="card" style="border-radius: 15px;">
+            <div class="card-body">
+  
+              <div class="row align-items-center pt-4 pb-2">
+                <div class="col-md-3 ps-5">
+  
+                  <h6 class="mb-0">Title</h6>
+  
+                </div>
+                <div class="col-md-9 pe-5">
+  
+                  <input type="text" class="form-control form-control-lg" value="{{job[0]['title']}}" name="title" required/>
+  
+                </div>
+              </div>
+  
+              <hr class="mx-n3">
+  
+              <div class="row align-items-center py-2">
+                <div class="col-md-3 ps-5">
+  
+                  <h6 class="mb-0">Location</h6>
+  
+                </div>
+                <div class="col-md-9 pe-5">
+  
+                  <input type="text" class="form-control form-control-lg" value="{{job[0]['location']}}" name="location" required/>
+  
+                </div>
+                
+              </div>
+
+              
+  
+              <hr class="mx-n3">
+
+              <div class="row align-items-center py-2">
+                <div class="col-md-3 ps-5">
+  
+                  <h6 class="mb-0">Salary</h6>
+  
+                </div>
+                <div class="col-md-9 pe-5">
+  
+                  <input type="number" class="form-control form-control-lg" value="{{job[0]['salary']}}" name="salary" required/>
+  
+                </div>
+                
+              </div>
+              <div class="row align-items-center py-2">
+                <div class="col-md-3 ps-5">
+  
+                  <h6 class="mb-0">Currency</h6>
+  
+                </div>
+                <div class="col-md-9 pe-5">
+  
+                  <input type="text" class="form-control form-control-lg" value="{{job[0]['currency']}}" name="currency" required/>
+  
+                </div>
+                
+              </div>
+  
+              <hr class="mx-n3">
+  
+              <div class="row align-items-center py-2">
+                <div class="col-md-3 ps-5">
+  
+                  <h6 class="mb-0">Responsibilities</h6>
+  
+                </div>
+                <div class="col-md-9 pe-5">
+  
+                  <textarea class="form-control" rows="3" name="responsibilities"> {{job[0]['responsibilities']}}</textarea>
+  
+                </div>
+              </div>
+
+              <div class="row align-items-center py-2">
+                <div class="col-md-3 ps-5">
+  
+                  <h6 class="mb-0">Requirements</h6>
+  
+                </div>
+                <div class="col-md-9 pe-5">
+  
+                  <textarea id="req" class="form-control" rows="3" value="{{job[0]['requirements']}}" name="requirements"> {{job[0]['requirements']}} </textarea>
+  
+                </div>
+              </div>
+  
+              <hr class="mx-n3">
+  
+              <div class="px-5 py-4" >
+                <button type="submit" class="btn btn-primary btn-lg">Update</button>
+              </div>
+  
+            </div>
+          </div>
+  
+        </div>
+      </div>
+    </div>
+  </form>

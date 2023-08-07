@@ -1,14 +1,34 @@
-{% include './bootstrap.html' %}
-
-<div class="row align-items-center pt-4 pb-3">
-    <div class="col-md-3 ps-5">
-
-      <h6 class="mb-0">{{job}}</h6>
-
-    </div>
-    <div class="col-md-9 pe-5">
-
-      <input type="text" class="form-control form-control-lg" name="title" required value="{{job}}"/>
-
-    </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  {% include './bootstrap.html' %}
+  <meta charset = "utf-8" />
+        <title>
+            Dk Careers Admin
+        </title>
+          
+        <!-- add icon link -->
+        <link rel = "icon" href = 
+"https://cdn-icons-png.flaticon.com/512/1754/1754397.png" 
+        type = "image/x-icon">
+</head>
+<body style="background-image:url('https://static.vecteezy.com/system/resources/previews/002/058/253/non_2x/abstract-polygonal-white-background-free-vector.jpg'); background-size: cover;  ">
+  <div class="container">
+    <h2 class = "text-center">Open Positions</h2>
+  <h4>
+    <p>
+      {% for job in jobs %}
+         {% include './update.html' %}
+    </br>
+      {% endfor %}
+    </p>
+  </h4>
 </div>
+<div class="text-center text-lg-start mt-4 pt-2 position-absolute top-0 end-0">
+  <button type="button" class="btn btn-dark btn-floating">
+    <i class="fa-solid fa-user-tag"></i>
+  </button><br>
+  <a href="/logout_admin" class="link-primary" style="margin-left: -0.5rem;">Logout</a>
+  </div>
+</body>
+</html>

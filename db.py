@@ -8,7 +8,7 @@ import os, random
 # we have to create a engine to import mysql database
 
 # we hide our db username, pass string in Db_Connections as we do not want to show this on github
-db_connection_string = os.environ['DB_Connections']
+db_connection_string = "mysql+pymysql://jwhwfbr26t8ar81b9q4y:pscale_pw_OVpfXjNbm7dVGvKnp4lVdOZwpkgD7ca3xtlqM9aaNZM@ap-south.connect.psdb.cloud/dkcareers?charset=utf8mb4"
 
 engine = create_engine(
   db_connection_string,
@@ -21,7 +21,7 @@ engine = create_engine(
 
 def Load_Jobs_From_DB():
   with engine.connect() as conn:
-    result = conn.execute(text("select * from jobs"))
+    result = conn.execute(text("SELECT * from jobs"))
     JOBS = []
   
     # print(type(result))
@@ -34,7 +34,7 @@ def Load_Jobs_From_DB():
 
 def load_users():
   with engine.connect() as conn:
-    result = conn.execute(text("select * from users"))
+    result = conn.execute(text("SELECT * from users"))
     Users = []
   
     # print(type(result))
@@ -47,7 +47,7 @@ def load_users():
 
 def check_valid_user(type, email, password):
   with engine.connect() as conn:
-    result = conn.execute(text((""" select * from {} where email = "{}" and password = "{}" """).format(type,email,password)))
+    result = conn.execute(text((""" SELECT * from {} where email = "{}" and password = "{}" """).format(type,email,password)))
     users = []
     
       # print(type(result))
@@ -59,16 +59,18 @@ def check_valid_user(type, email, password):
   
 def register_new_user(type, name, email, password):
   with engine.connect() as conn:
-    conn.execute(text((""" insert into {} (name, email, password) VALUES ('{}', '{}', '{}') """).format(type,name,email,password)))
+    conn.execute(text((""" INSERT into {} (name, email, password) VALUES ('{}', '{}', '{}') """).format(type,name,email,password)))
 
 
 def add_job_to_DB(title, location, salary, currency, responsibilities, requirements):
   with engine.connect() as conn:
-    conn.execute(text((""" insert into jobs (`title`, `location`, `salary`, `currency`, `responsibilities`, `requirements`) VALUES ('{}', '{}', '{}','{}', '{}', '{}') """).format(title, location, salary, currency, responsibilities, requirements)))
+    conn.execute(text((""" INSERT into jobs (`title`, `location`, `salary`, `currency`, `responsibilities`, `requirements`) VALUES ('{}', '{}', '{}','{}', '{}', '{}') """).format(title, location, salary, currency, responsibilities, requirements)))
 
-def get_job():
+  
+
+def fetch_job_with_id(id):
   with engine.connect() as conn:
-    result = conn.execute(text(""" select * from jobs """))
+    result = conn.execute(text((""" SELECT * from jobs where id = '{}' """).format(id)))
     job = []
     
       # print(type(result))
@@ -77,3 +79,7 @@ def get_job():
       job.append(row._asdict())
         
     return job
+  
+def add_updated_job_to_DB(title, location, salary, currency, responsibilities, requirements, id):
+  with engine.connect() as conn:
+    conn.execute(text(("""  UPDATE jobs SET title = '{}', location = '{}', salary = '{}', currency = '{}', responsibilities = "{}", requirements = "{}"  WHERE id = {} """).format(title, location, salary, currency, responsibilities, requirements,id)))

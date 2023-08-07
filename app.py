@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, jsonify, redirect, session, flash
-from flask_sqlalchemy import SQLAlchemy
-from db import load_users, check_valid_user, register_new_user, Load_Jobs_From_DB, add_job_to_DB, get_job
+# from flask_sqlalchemy import SQLAlchemy
+from db import load_users, check_valid_user, register_new_user, Load_Jobs_From_DB, add_job_to_DB, fetch_job_with_id, add_updated_job_to_DB
 import os
 
 app = Flask(__name__)
@@ -88,9 +88,9 @@ def logout_admin():
 @app.route('/add__new_job')
 def add__new_job():
     if 'admin_id' in session:
-        return redirect(render_template('admin/add__new_job.html'))
+        return render_template('admin/add_new_job.html')
     else:
-        return redirect('/') 
+        return redirect('/admin') 
 
 
 @app.route('/submit_new_job', methods=['POST'])
@@ -107,9 +107,25 @@ def submit_new_job():
 
 @app.route('/update_job')
 def update_job():
-    job = get_job()  
-    return render_template('admin/update_job.html', job = job)
+    jobs = Load_Jobs_From_DB()
+    return render_template('admin/update_job.html', jobs = jobs)
 
+
+@app.route('/update_job/<id>')
+def update_specific_job(id):
+    job = fetch_job_with_id(id)
+    return render_template('update_specific_job.html', job = job)
+
+@app.route('/<id>/submit_updated_job', methods=['POST'])
+def submit_updated_job(id):
+    title = request.form.get('title')
+    location = request.form.get('location')
+    salary = request.form.get('salary')
+    currency = request.form.get('currency')
+    responsibilities = request.form.get('responsibilities')
+    requirements = request.form.get('requirements')
+    add_updated_job_to_DB(title, location, salary, currency, responsibilities, requirements,id)
+    return redirect('/update_job')
 
 if __name__ == "__main__":
     app.run(debug=True)
