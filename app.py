@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, jsonify, redirect, session, flash
-# from flask_sqlalchemy import SQLAlchemy
-from db import load_users, check_valid_user, register_new_user, Load_Jobs_From_DB, add_job_to_DB, fetch_job_with_id, add_updated_job_to_DB
+from flask_sqlalchemy import SQLAlchemy
+from db import load_users, check_valid_user, register_new_user, Load_Jobs_From_DB, add_job_to_DB, get_job
 import os
 
 app = Flask(__name__)
@@ -88,7 +88,7 @@ def logout_admin():
 @app.route('/add__new_job')
 def add__new_job():
     if 'admin_id' in session:
-        return render_template('admin/add_new_job.html')
+        return redirect(render_template('admin/add__new_job.html'))
     else:
         return redirect('/admin') 
 
