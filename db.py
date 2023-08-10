@@ -8,7 +8,7 @@ import os, random
 # we have to create a engine to import mysql database
 
 # we hide our db username, pass string in Db_Connections as we do not want to show this on github
-db_connection_string = "mysql+pymysql://jwhwfbr26t8ar81b9q4y:pscale_pw_OVpfXjNbm7dVGvKnp4lVdOZwpkgD7ca3xtlqM9aaNZM@ap-south.connect.psdb.cloud/dkcareers?charset=utf8mb4"
+db_connection_string = os.environ['DB_Connections']
 
 engine = create_engine(
   db_connection_string,
