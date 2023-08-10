@@ -87,7 +87,7 @@ def logout_admin():
 @app.route('/add__new_job')
 def add__new_job():
     if 'admin_id' in session:
-        return redirect(render_template('admin/add__new_job.html'))
+        return redirect(render_template('admin/add_new_job.html'))
     else:
         return redirect('/admin') 
 
