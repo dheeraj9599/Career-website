@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, session, flash
-from db import load_users, check_valid_user, register_new_user, Load_Jobs_From_DB, add_job_to_DB,fetch_job_with_id, add_updated_job_to_DB
+from db import load_users, check_valid_user, register_new_user, Load_Jobs_From_DB, add_job_to_DB,fetch_job_with_id, add_updated_job_to_DB, add_application_in_DB
 import os
 
 app = Flask(__name__)
@@ -20,7 +20,7 @@ def login():
 def home():
     if 'user_id' in session or 'admin_id' in session:
         jobs = Load_Jobs_From_DB()
-        return render_template('home.html', jobs = jobs)
+        return render_template('user/home.html', jobs = jobs)
     else:
         return redirect('/')
 
@@ -84,10 +84,10 @@ def logout_admin():
     return redirect('/')
 
 
-@app.route('/add__new_job')
+@app.route('/add_new_job')
 def add__new_job():
     if 'admin_id' in session:
-        return redirect(render_template('admin/add__new_job.html'))
+        return render_template('admin/add/add_new_job.html')
     else:
         return redirect('/admin') 
 
@@ -107,13 +107,21 @@ def submit_new_job():
 @app.route('/update_job')
 def update_job():
     jobs = Load_Jobs_From_DB()
-    return render_template('admin/update_job.html', jobs = jobs)
+
+    if 'admin_id' in session:
+        return render_template('admin/update/update_job.html', jobs = jobs)
+    else:
+        return redirect('/admin') 
+    
 
 
 @app.route('/update_job/<id>')
 def update_specific_job(id):
     job = fetch_job_with_id(id)
-    return render_template('update_specific_job.html', job = job)
+    if 'admin_id' in session:
+        return render_template('admin/update/update_specific_job.html', job = job)
+    else:
+        return redirect('/admin') 
 
 @app.route('/<id>/submit_updated_job', methods=['POST'])
 def submit_updated_job(id):
@@ -125,6 +133,26 @@ def submit_updated_job(id):
     requirements = request.form.get('requirements')
     add_updated_job_to_DB(title, location, salary, currency, responsibilities, requirements,id)
     return redirect('/update_job')
+
+
+@app.route('/job/<id>')
+def job_application(id):
+    job = fetch_job_with_id(id)
+    if 'user_id' in session:
+        return render_template('user/job_application.html', job = job)
+    else : redirect('/')
+    
+@app.route('/job/<id>/apply', methods=['POST'])
+def job_application_submission(id):
+    Full_name = request.form.get('Full_name')
+    email = request.form.get('email')
+    Education = request.form.get('Education')
+    Work_Experience = request.form.get('Work_Experience')
+    Resume_url = request.form.get('Resume_url')
+    if 'user_id' in session:
+        add_application_in_DB(id, Full_name, email, Education, Work_Experience, Resume_url)
+        return render_template('user/submitted_application.html')
+    else : redirect('/')
 
 if __name__ == "__main__":
     app.run(debug=True)

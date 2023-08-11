@@ -8,7 +8,7 @@ import os, random
 # we have to create a engine to import mysql database
 
 # we hide our db username, pass string in Db_Connections as we do not want to show this on github
-db_connection_string = "mysql+pymysql://jwhwfbr26t8ar81b9q4y:pscale_pw_OVpfXjNbm7dVGvKnp4lVdOZwpkgD7ca3xtlqM9aaNZM@ap-south.connect.psdb.cloud/dkcareers?charset=utf8mb4"
+db_connection_string = os.getenv('DB_Connections')
 
 engine = create_engine(
   db_connection_string,
@@ -64,7 +64,7 @@ def register_new_user(type, name, email, password):
 
 def add_job_to_DB(title, location, salary, currency, responsibilities, requirements):
   with engine.connect() as conn:
-    conn.execute(text((""" INSERT into jobs (`title`, `location`, `salary`, `currency`, `responsibilities`, `requirements`) VALUES ('{}', '{}', '{}','{}', '{}', '{}') """).format(title, location, salary, currency, responsibilities, requirements)))
+    conn.execute(text((""" INSERT into jobs (`title`, `location`, `salary`, `currency`, `responsibilities`, `requirements`) VALUES ("{}", "{}", "{}","{}", "{}", "{}") """).format(title, location, salary, currency, responsibilities, requirements)))
 
   
 
@@ -82,4 +82,8 @@ def fetch_job_with_id(id):
   
 def add_updated_job_to_DB(title, location, salary, currency, responsibilities, requirements, id):
   with engine.connect() as conn:
-    conn.execute(text(("""  UPDATE jobs SET title = '{}', location = '{}', salary = '{}', currency = '{}', responsibilities = "{}", requirements = "{}"  WHERE id = {} """).format(title, location, salary, currency, responsibilities, requirements,id)))
+    conn.execute(text(("""  UPDATE jobs SET title = "{}", location = "{}", salary = "{}", currency = "{}", responsibilities = "{}", requirements = "{}"  WHERE id = {} """).format(title, location, salary, currency, responsibilities, requirements,id)))
+
+def add_application_in_DB(id, Full_name, email, Education, Work_Experience, Resume_url):
+  with engine.connect() as conn:
+    conn.execute(text(("""  INSERT into applications (`job_id`, `Full_Name`, `email`, `Education`, `Work_Experience`, `Resume_url`) VALUES ("{}", "{}", "{}","{}", "{}", "{}") """).format(id, Full_name, email, Education, Work_Experience, Resume_url)))

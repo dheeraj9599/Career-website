@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  {% include 'bootstrap.html' %}
+  <title>Document</title>
+</head>
+<body style="background-image:url('https://cdn.wallpapersafari.com/44/16/xG4FEk.jpg');  ">
+  {% include 'user/nav.html' %}
+  <div class="container">
+    <h4 class="mt-4">{{job[0]['title']}}</h4>
+  <p class="lead">{{job[0]['location']}}</p>
+  <h4> Responsibilities </h4>
+  <ul>
+    {%for res in job[0]['responsibilities'].split(",")%}
+    <li>{{res}}</li>
+    {% endfor %}
+  </ul>
+
+  <h4> Requirements </h4>
+  <ol>
+    {%for req in job[0]['requirements'].split(",")%}
+    <li>{{req}}</li>
+    {% endfor %}
+  </ol>
+    <div>
+      <h5 style="display:inline;">Salary :</h5> 
+      <p style="display:inline;">{{job[0]['currency']}} {{job[0]['salary']}}</p>
+    </div>
+    <br>
+    
+    <h4>Application Form</h4>
+<!-- post will not show the submitted details on url -->
+<!-- post is more secured to access the details in app.py we have to use methods["post"]-->
+<form action="/job/{{job[0]['id']}}/apply" method="post"> 
+  <div class="mb-2 w-25">
+    <label class="font-monospace">Full name</label>
+  <input class="form-control" type="text" name="Full_name" placeholder="John Prakash" required>
+  </div>
+
+  <div class="mb-2 w-25">
+    <label class="font-monospace">Email</label>
+  <input class="form-control" type="text" name="Email"placeholder="example@example.com" required>
+  </div>
+
+  <div class="mb-2 w-25">
+    <label class="font-monospace">Education</label>
+  <input class="form-control" type="text" name="Education" placeholder="B.tech(MCE)" required>
+  </div>
+
+  <div class="mb-2 w-25">
+    <label class="font-monospace">Work Experience</label>
+  <input class="form-control" type="text" name="Work_Experience"placeholder="Intern at XYZ company" required>
+  </div>
+  
+  <div class="mb-2 w-25 ">
+    <label class="font-monospace">Resume URL</label>
+  <input class="form-control" type="text" name="Resume_url" placeholder="http://www.example.com/index.html" required>
+  </div>
+  
+  <input class="btn btn-primary" type="submit">
+</form> 
+
+  </div>
+</body>
+</html>
